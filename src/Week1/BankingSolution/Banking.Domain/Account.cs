@@ -4,20 +4,20 @@ public class Account
 {
 
     private decimal _balance = 5000M;
-    public void Deposit(decimal amountToDeposit)
+    public void Deposit(TransactionValueTypes.Deposit amountToDeposit)
     {
         _balance += amountToDeposit;
 
     }
 
-    public decimal GetBalance()
+    public TransactionValueTypes.Balance GetBalance()
     {
 
         return _balance;
 
     }
 
-    public void Withdraw(decimal amountToWithdraw)
+    public void Withdraw(TransactionValueTypes.Withdrawl amountToWithdraw)
     {
         GuardHasSufficientFunds(amountToWithdraw);
 

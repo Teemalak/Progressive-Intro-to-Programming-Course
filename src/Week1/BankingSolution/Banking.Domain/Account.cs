@@ -3,9 +3,16 @@
 public class Account
 {
     private decimal _balance = 5000M;
-    public virtual void Deposit(TransactionValueTypes.Deposit amountToDeposit)
+    private ICalculateBonusesForDeposits _bonusCalculator;
+    public Account(ICalculateBonusesForDeposits bonusCalculator)
     {
-        _balance += amountToDeposit.Value;
+        _bonusCalculator = bonusCalculator;
+    }
+    public virtual void Deposit(TransactionValueTypes.Deposit deposit)
+    {
+        decimal bonus = _bonusCalculator.CalculateBonusFor(this, deposit);
+        _balance += deposit.Value + bonus;// + bonus;
+
     }
 
     public decimal GetBalance()
@@ -21,9 +28,9 @@ public class Account
         _balance -= amountToWithdraw.Value; // The important business!
     }
 
-    private void GuardHasSufficientFunds(decimal amountToWithdraw)
+    private void GuardHasSufficientFunds(decimal withdrawal)
     {
-        if (amountToWithdraw > _balance)
+        if (withdrawal > _balance)
         {
             throw new OverdraftException();
         }

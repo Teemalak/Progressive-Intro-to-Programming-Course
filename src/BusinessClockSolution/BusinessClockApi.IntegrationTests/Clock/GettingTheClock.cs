@@ -22,6 +22,8 @@ public class GettingTheClock
     [Fact]
     public async Task DuringOpenHours()
     {
+
+        // Given 
         var expectedResponse = new ClockResponse(true, null);
         var host = await AlbaHost.For<Program>(config =>
         {
@@ -33,6 +35,8 @@ public class GettingTheClock
             });
         });
 
+        // When
+
         var response = await host.Scenario(api =>
         {
             api.Get.Url("/clock");
@@ -42,12 +46,13 @@ public class GettingTheClock
         var result = response.ReadAsJson<ClockResponse>();
 
         Assert.Equal(expectedResponse, result);
-    }
 
+    }
     [Fact]
     public async Task AfterHours()
     {
 
+        // Given 
         var expectedResponse = new ClockResponse(false, new DateTime(1969, 04, 21, 9, 00, 00));
         var host = await AlbaHost.For<Program>(config =>
         {
@@ -59,6 +64,8 @@ public class GettingTheClock
             });
         });
 
+        // When
+
         var response = await host.Scenario(api =>
         {
             api.Get.Url("/clock");
@@ -69,6 +76,6 @@ public class GettingTheClock
         Assert.NotNull(result);
         Assert.Equal(expectedResponse, result);
 
+
     }
 }
-

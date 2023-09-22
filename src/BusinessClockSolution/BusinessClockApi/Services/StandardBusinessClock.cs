@@ -25,23 +25,23 @@ public class StandardBusinessClock : IProvideTheBusinessClock
         {
             DayOfWeek.Saturday => false,
             DayOfWeek.Sunday => false,
-            _ => hour >= openingTime.Hours && hour <= closingTime.Hours,
+            _ => hour >= openingTime.Hours && hour < closingTime.Hours,
         };
+
+
         if (isOpen)
         {
             return new ClockResponse(true, null);
         }
 
-        var openingNext = dayOfTheWeek switch
-        {
-            DayOfWeek.Friday => now.AddDays(3),
-            DayOfWeek.Saturday => now.AddDays(2),
-            DayOfWeek.Sunday => now.AddDays(1),
-            _ => now.AddDays(1)
-        };
+        var nextOpen = now;
 
-        openingNext = openingNext.Date.Add(openingTime);
+        if (now.Hour > 16 && now.DayOfWeek == DayOfWeek.Friday) nextOpen = now.AddDays(3);
+        else if (now.DayOfWeek == DayOfWeek.Saturday) nextOpen = now.AddDays(2);
+        else if (now.Hour > 16 || now.DayOfWeek == DayOfWeek.Sunday) nextOpen = now.AddDays(1);
 
-        return new ClockResponse(false, openingNext);
+        nextOpen = nextOpen.Date.Add(openingTime);
+
+        return new ClockResponse(false, nextOpen);
     }
 }

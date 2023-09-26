@@ -1,16 +1,15 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink, RouterLinkActive } from "@angular/router";
-import { TodoSummaryComponent } from "../todo-summary.component";
 
 @Component({
   selector: "app-nav-bar",
   standalone: true,
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl">Frontend</a>
-        <app-todo-summary />
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
@@ -40,6 +39,5 @@ import { TodoSummaryComponent } from "../todo-summary.component";
     </div>
   `,
   styles: [],
-  imports: [CommonModule, RouterLink, RouterLinkActive, TodoSummaryComponent],
 })
 export class NavBarComponent {}

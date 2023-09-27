@@ -31,8 +31,7 @@ import { TodoSummaryComponent } from "../todo-summary.component";
               <summary>Demos</summary>
               <ul class="p-2 bg-base-100">
                 <li><a routerLink="todos">Todos</a></li>
-                <li><a routerLink="admin">Admin Stuff</a></li>
-                <li><a routerLink="counter"> Counter</a></li>
+                <li><a>Link 2</a></li>
               </ul>
             </details>
           </li>

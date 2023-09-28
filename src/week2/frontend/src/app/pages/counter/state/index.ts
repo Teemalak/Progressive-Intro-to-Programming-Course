@@ -1,5 +1,9 @@
 import { createFeature, createReducer, createSelector, on } from "@ngrx/store";
-import { CountByValues, CounterEvents } from "./counter.actions";
+import {
+  CountByValues,
+  CounterDocuments,
+  CounterEvents,
+} from "./counter.actions";
 
 export interface CounterState {
   current: number;
@@ -15,6 +19,7 @@ export const counterFeature = createFeature({
   name: "counter",
   reducer: createReducer(
     initialState,
+    on(CounterDocuments.counterState, (_, a) => a.payload),
     on(CounterEvents.countByChanged, (state, action) => ({
       ...state,
       by: action.by,

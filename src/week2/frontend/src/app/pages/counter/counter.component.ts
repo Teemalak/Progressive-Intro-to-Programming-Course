@@ -35,7 +35,9 @@ export class CounterComponent {
   resetDisabled = this.store.selectSignal(
     counterFeature.selectResetShouldBeDisabled,
   );
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store) {
+    store.dispatch(CounterEvents.counterEntered());
+  }
   increment() {
     this.store.dispatch(CounterEvents.incrementClicked());
     //this.current.set(this.current() + 1);

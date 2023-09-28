@@ -9,6 +9,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(pol =>
+    {
+        pol.AllowAnyOrigin();
+        pol.AllowAnyHeader();
+        pol.AllowAnyMethod();
+    });
+});
 var connectionString = builder.Configuration.GetConnectionString("todos") ?? throw new Exception("Can't start the api whtiout a connection string");
 
 builder.Services.AddMarten(options =>
@@ -21,6 +30,7 @@ builder.Services.AddMarten(options =>
 builder.Services.AddScoped<IManageTodoLists, PostgresMartenTodoListManager>();
 var app = builder.Build();
 
+app.UseCors();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

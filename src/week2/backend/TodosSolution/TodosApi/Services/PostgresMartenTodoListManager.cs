@@ -12,13 +12,14 @@ public class PostgresMartenTodoListManager : IManageTodoLists
         _session = session;
     }
 
-    public async Task<todoItemResponse> AddTodoItemAsync(TodoCreateRequest request)
+    public async Task<TodoItemResponse> AddTodoItemAsync(TodoCreateRequest request)
     {
-        var itemToSave = new todoItemResponse
+
+        var itemToSave = new TodoItemResponse
         {
             Id = Guid.NewGuid(),
             Description = request.Description,
-            Completed = false,
+            Completed = false
         };
 
         _session.Insert(itemToSave);
@@ -28,8 +29,15 @@ public class PostgresMartenTodoListManager : IManageTodoLists
 
     public async Task<TodoListSummaryResponse> GetAllTodosAsync()
     {
-        var items = await _session.Query<todoItemResponse>().ToListAsync();
+        var items = await _session.Query<TodoItemResponse>().ToListAsync();
 
         return new TodoListSummaryResponse { Items = items };
+    }
+
+    public async Task MarkItemCompletedAsync(TodoItemResponse request)
+    {
+        request.Completed = true;
+        _session.Store(request); // "Upsert"
+        await _session.SaveChangesAsync();
     }
 }

@@ -2,6 +2,7 @@
 
 public interface IManageTodoLists
 {
-    Task<todoItemResponse> AddTodoItemAsync(TodoCreateRequest request);
+    Task<TodoItemResponse> AddTodoItemAsync(TodoCreateRequest request);
     Task<TodoListSummaryResponse> GetAllTodosAsync();
+    Task MarkItemCompletedAsync(TodoItemResponse request);
 }

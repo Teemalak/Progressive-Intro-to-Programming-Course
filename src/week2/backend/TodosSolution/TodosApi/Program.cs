@@ -18,14 +18,14 @@ builder.Services.AddCors(options =>
         pol.AllowAnyMethod();
     });
 });
-var connectionString = builder.Configuration.GetConnectionString("todos") ?? throw new Exception("Can't start the api whtiout a connection string");
+
+var connectionString = builder.Configuration.GetConnectionString("todos") ?? throw new Exception("Can't start the api without a connection string");
 
 builder.Services.AddMarten(options =>
 {
     options.Connection(connectionString);
     options.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.All;
 });
-
 
 builder.Services.AddScoped<IManageTodoLists, PostgresMartenTodoListManager>();
 var app = builder.Build();
@@ -42,4 +42,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run(); // Start a server that implements RFC 2616+ as a web server.

@@ -2,13 +2,14 @@
 
 namespace TodosApi.Models;
 
+
 public record TodoCreateRequest
 {
     [Required, MaxLength(255)]
     public string Description { get; set; } = string.Empty;
 }
 
-public record todoItemResponse
+public record TodoItemResponse
 {
     public Guid Id { get; set; }
     public string Description { get; set; } = string.Empty;
@@ -17,5 +18,5 @@ public record todoItemResponse
 
 public record TodoListSummaryResponse
 {
-    public IReadOnlyList<todoItemResponse>? Items { get; set; }
+    public IReadOnlyList<TodoItemResponse>? Items { get; set; }
 }
